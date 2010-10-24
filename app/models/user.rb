@@ -1,17 +1,19 @@
 # == Schema Information
-# Schema version: 20101023143212
+# Schema version: 20101024143030
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email
+  attr_accessor :password
+   attr_accessible :name, :email, :password, :password_confirmation
 
   email_regex = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
   
@@ -20,4 +22,9 @@ class User < ActiveRecord::Base
   validates :email, :presence   => true,
             :format     => { :with => email_regex },
             :uniqueness => { :case_sensitive => false }
+  
+  # Automatically create the virtual attribute 'password_confirmation'.
+   validates :password, :presence     => true,
+                        :confirmation => true,
+                        :length       => { :within => 6..40 }
 end
