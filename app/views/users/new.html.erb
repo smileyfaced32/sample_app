@@ -7,7 +7,7 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %> <a href="http://www.gravatar.com/">(Gravator Image Activated)</a><br />
     <%= f.text_field :email %>
   </div>
   <div class="field">
@@ -22,3 +22,5 @@
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
+
+<p>Already a user? <%= link_to "Sign in now!", signin_path %></p>
